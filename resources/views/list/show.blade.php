@@ -30,7 +30,7 @@
                                     <tr>
                                         <th>ID</th><td>{{ $list->id }}</td>
                                     </tr>
-                                    <tr><th> Title </th><td> {{ $list->title }} </td></tr>
+                                    <tr><th> Title </th><td> {{ $list->title }} </td></tr><tr><th> Brand Id </th><td> {{ $list->brand_id }} </td></tr>
                                 </tbody>
                             </table>
                         </div>

@@ -15,14 +15,14 @@
                             <table class="table table-borderless">
                                 <thead>
                                     <tr>
-                                        <th>ID</th><th> Title </th><th>Actions</th>
+                                        <th>ID</th><th> Title </th><th> Brand Id </th><th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($list as $item)
                                     <tr>
                                         <td>{{ $item->id }}</td>
-                                        <td>{{ $item->title }}</td>
+                                        <td>{{ $item->title }}</td><td>{{ $item->brand_id }}</td>
                                         <td>
                                             <a href="{{ url('/list/' . $item->id) }}" class="btn btn-success btn-xs" title="View List"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"/></a>
                                             <a href="{{ url('/list/' . $item->id . '/edit') }}" class="btn btn-primary btn-xs" title="Edit List"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
