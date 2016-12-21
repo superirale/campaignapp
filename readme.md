@@ -8,8 +8,8 @@ Campaign App is a free online marketing platform for digital marketer. Campaign 
 * Campaign Management
 * HTML Template Management
 * Landing page generator
+* List and Subscriber Management
 * Reports
-* Subscriber Management
 * Subscription form with custom fields
 
 ## How to install
