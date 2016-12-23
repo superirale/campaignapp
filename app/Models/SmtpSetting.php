@@ -1,10 +1,10 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class smtp_setting extends Model
+class SmtpSetting extends Model
 {
     /**
      * The database table used by the model.
@@ -25,7 +25,7 @@ class smtp_setting extends Model
      *
      * @var array
      */
-    protected $fillable = ['host', 'port', 'encryption', 'username', 'password'];
+    protected $fillable = ['host', 'port', 'encryption', 'username', 'password', 'brand_id'];
 
-    
+
 }

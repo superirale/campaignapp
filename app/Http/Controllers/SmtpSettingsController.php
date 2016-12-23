@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use App\smtp_setting;
+use App\Models\SmtpSetting;
+use App\Models\Brand;
 use Illuminate\Http\Request;
 use Session;
+use Auth;
+use App\Helpers\Utils;
 
 class SmtpSettingsController extends Controller
 {
@@ -18,7 +21,7 @@ class SmtpSettingsController extends Controller
      */
     public function index()
     {
-        $smtp_settings = smtp_setting::paginate(25);
+        $smtp_settings = SmtpSetting::paginate(25);
 
         return view('smtp_settings.index', compact('smtp_settings'));
     }
@@ -47,8 +50,10 @@ class SmtpSettingsController extends Controller
 			'port' => 'min:2|integer|required'
 		]);
         $requestData = $request->all();
+        $brand = Brand::where('user_id', Auth::user()->id)->first();
+        $requestData['brand_id'] = $brand->id;
 
-        smtp_setting::create($requestData);
+        SmtpSetting::create($requestData);
 
         Session::flash('flash_message', 'smtp_setting added!');
 
@@ -64,7 +69,7 @@ class SmtpSettingsController extends Controller
      */
     public function show($id)
     {
-        $smtp_setting = smtp_setting::findOrFail($id);
+        $smtp_setting = SmtpSetting::findOrFail($id);
 
         return view('smtp_settings.show', compact('smtp_setting'));
     }
@@ -78,7 +83,7 @@ class SmtpSettingsController extends Controller
      */
     public function edit($id)
     {
-        $smtp_setting = smtp_setting::findOrFail($id);
+        $smtp_setting = SmtpSetting::findOrFail($id);
 
         return view('smtp_settings.edit', compact('smtp_setting'));
     }
@@ -99,7 +104,12 @@ class SmtpSettingsController extends Controller
 		]);
         $requestData = $request->all();
 
-        $smtp_setting = smtp_setting::findOrFail($id);
+        $smtp_setting = SmtpSetting::findOrFail($id);
+
+        $brand = Brand::findOrFail($smtp_setting->brand_id);
+        if(! Utils::isOwner(Auth::user()->id, $brand->user_id))
+            Session::flash('flash_message', 'SMTP settings does not belong this account!');
+
         $smtp_setting->update($requestData);
 
         Session::flash('flash_message', 'smtp_setting updated!');
@@ -116,7 +126,12 @@ class SmtpSettingsController extends Controller
      */
     public function destroy($id)
     {
-        smtp_setting::destroy($id);
+        $smtp_setting = SmtpSetting::find($id);
+        $brand = Brand::findOrFail($smtp_setting->brand_id);
+        if(! Utils::isOwner(Auth::user()->id, $brand->user_id))
+            Session::flash('flash_message', 'SMTP settings does not belong this account!');
+
+        SmtpSetting::destroy($id);
 
         Session::flash('flash_message', 'smtp_setting deleted!');
 
