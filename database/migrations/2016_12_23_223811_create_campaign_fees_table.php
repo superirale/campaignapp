@@ -14,6 +14,7 @@ class CreateCampaignFeesTable extends Migration
     {
         Schema::create('campaign_fees', function(Blueprint $table) {
             $table->increments('id');
+            $table->integer('brand_id');
             $table->string('currency');
             $table->double('delivery_fee');
             $table->double('cost_per_recipient');
