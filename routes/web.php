@@ -17,11 +17,11 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index');
+Route::get('/dashboard', 'DashboardController@index');
 
 Route::resource('list', 'ListController');
 Route::resource('list', 'ListController');
 Route::resource('brand', 'BrandController');
-Route::resource('smtp_settings', 'smtp_settingsController');
-Route::resource('api_settings', 'api_settingsController');
+Route::resource('smtp_settings', 'SmtpSettingsController');
+Route::resource('api_settings', 'ApiSettingsController');
 Route::resource('clients', 'ClientsController');

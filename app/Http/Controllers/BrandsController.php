@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use App\smtp_setting;
+use App\Models\Brand;
 use Illuminate\Http\Request;
 use Session;
 
-class smtp_settingsController extends Controller
+class BrandsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,9 +18,9 @@ class smtp_settingsController extends Controller
      */
     public function index()
     {
-        $smtp_settings = smtp_setting::paginate(25);
+        $brand = Brand::paginate(25);
 
-        return view('smtp_settings.index', compact('smtp_settings'));
+        return view('brand.index', compact('brand'));
     }
 
     /**
@@ -30,7 +30,7 @@ class smtp_settingsController extends Controller
      */
     public function create()
     {
-        return view('smtp_settings.create');
+        return view('brand.create');
     }
 
     /**
@@ -43,16 +43,18 @@ class smtp_settingsController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-			'host' => 'min:3|required',
-			'port' => 'min:2|integer|required'
+			'name' => 'min:3|required',
+			'from_name' => 'min:3|required',
+			'from_email' => 'min:10|max:50|required',
+			'reply_email' => 'min:10|max:50|required'
 		]);
         $requestData = $request->all();
-        
-        smtp_setting::create($requestData);
 
-        Session::flash('flash_message', 'smtp_setting added!');
+        $brand = Brand::create($requestData);
 
-        return redirect('smtp_settings');
+        Session::flash('flash_message', 'Brand added!');
+
+        return redirect('brand');
     }
 
     /**
@@ -64,9 +66,9 @@ class smtp_settingsController extends Controller
      */
     public function show($id)
     {
-        $smtp_setting = smtp_setting::findOrFail($id);
+        $brand = Brand::findOrFail($id);
 
-        return view('smtp_settings.show', compact('smtp_setting'));
+        return view('brand.show', compact('brand'));
     }
 
     /**
@@ -78,9 +80,9 @@ class smtp_settingsController extends Controller
      */
     public function edit($id)
     {
-        $smtp_setting = smtp_setting::findOrFail($id);
+        $brand = Brand::findOrFail($id);
 
-        return view('smtp_settings.edit', compact('smtp_setting'));
+        return view('brand.edit', compact('brand'));
     }
 
     /**
@@ -94,17 +96,19 @@ class smtp_settingsController extends Controller
     public function update($id, Request $request)
     {
         $this->validate($request, [
-			'host' => 'min:3|required',
-			'port' => 'min:2|integer|required'
+			'name' => 'min:3|required',
+			'from_name' => 'min:3|required',
+			'from_email' => 'min:10|max:50|required',
+			'reply_email' => 'min:10|max:50|required'
 		]);
         $requestData = $request->all();
-        
-        $smtp_setting = smtp_setting::findOrFail($id);
-        $smtp_setting->update($requestData);
 
-        Session::flash('flash_message', 'smtp_setting updated!');
+        $brand = Brand::findOrFail($id);
+        $brand->update($requestData);
 
-        return redirect('smtp_settings');
+        Session::flash('flash_message', 'Brand updated!');
+
+        return redirect('brand');
     }
 
     /**
@@ -116,10 +120,10 @@ class smtp_settingsController extends Controller
      */
     public function destroy($id)
     {
-        smtp_setting::destroy($id);
+        Brand::destroy($id);
 
-        Session::flash('flash_message', 'smtp_setting deleted!');
+        Session::flash('flash_message', 'Brand deleted!');
 
-        return redirect('smtp_settings');
+        return redirect('brand');
     }
 }

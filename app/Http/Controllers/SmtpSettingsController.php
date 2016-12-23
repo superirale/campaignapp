@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use App\api_setting;
+use App\smtp_setting;
 use Illuminate\Http\Request;
 use Session;
 
-class api_settingsController extends Controller
+class SmtpSettingsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,9 +18,9 @@ class api_settingsController extends Controller
      */
     public function index()
     {
-        $api_settings = api_setting::paginate(25);
+        $smtp_settings = smtp_setting::paginate(25);
 
-        return view('api_settings.index', compact('api_settings'));
+        return view('smtp_settings.index', compact('smtp_settings'));
     }
 
     /**
@@ -30,7 +30,7 @@ class api_settingsController extends Controller
      */
     public function create()
     {
-        return view('api_settings.create');
+        return view('smtp_settings.create');
     }
 
     /**
@@ -43,17 +43,16 @@ class api_settingsController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-			'key' => 'min:3|required',
-			'secret' => 'min:3|required',
-			'brand_id' => 'mmin:1|intger|required'
+			'host' => 'min:3|required',
+			'port' => 'min:2|integer|required'
 		]);
         $requestData = $request->all();
-        
-        api_setting::create($requestData);
 
-        Session::flash('flash_message', 'api_setting added!');
+        smtp_setting::create($requestData);
 
-        return redirect('api_settings');
+        Session::flash('flash_message', 'smtp_setting added!');
+
+        return redirect('smtp_settings');
     }
 
     /**
@@ -65,9 +64,9 @@ class api_settingsController extends Controller
      */
     public function show($id)
     {
-        $api_setting = api_setting::findOrFail($id);
+        $smtp_setting = smtp_setting::findOrFail($id);
 
-        return view('api_settings.show', compact('api_setting'));
+        return view('smtp_settings.show', compact('smtp_setting'));
     }
 
     /**
@@ -79,9 +78,9 @@ class api_settingsController extends Controller
      */
     public function edit($id)
     {
-        $api_setting = api_setting::findOrFail($id);
+        $smtp_setting = smtp_setting::findOrFail($id);
 
-        return view('api_settings.edit', compact('api_setting'));
+        return view('smtp_settings.edit', compact('smtp_setting'));
     }
 
     /**
@@ -95,18 +94,17 @@ class api_settingsController extends Controller
     public function update($id, Request $request)
     {
         $this->validate($request, [
-			'key' => 'min:3|required',
-			'secret' => 'min:3|required',
-			'brand_id' => 'mmin:1|intger|required'
+			'host' => 'min:3|required',
+			'port' => 'min:2|integer|required'
 		]);
         $requestData = $request->all();
-        
-        $api_setting = api_setting::findOrFail($id);
-        $api_setting->update($requestData);
 
-        Session::flash('flash_message', 'api_setting updated!');
+        $smtp_setting = smtp_setting::findOrFail($id);
+        $smtp_setting->update($requestData);
 
-        return redirect('api_settings');
+        Session::flash('flash_message', 'smtp_setting updated!');
+
+        return redirect('smtp_settings');
     }
 
     /**
@@ -118,10 +116,10 @@ class api_settingsController extends Controller
      */
     public function destroy($id)
     {
-        api_setting::destroy($id);
+        smtp_setting::destroy($id);
 
-        Session::flash('flash_message', 'api_setting deleted!');
+        Session::flash('flash_message', 'smtp_setting deleted!');
 
-        return redirect('api_settings');
+        return redirect('smtp_settings');
     }
 }

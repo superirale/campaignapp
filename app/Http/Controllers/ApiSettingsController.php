@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use App\Models\Brand;
+use App\api_setting;
 use Illuminate\Http\Request;
 use Session;
 
-class BrandController extends Controller
+class ApiSettingsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,9 +18,9 @@ class BrandController extends Controller
      */
     public function index()
     {
-        $brand = Brand::paginate(25);
+        $api_settings = api_setting::paginate(25);
 
-        return view('brand.index', compact('brand'));
+        return view('api_settings.index', compact('api_settings'));
     }
 
     /**
@@ -30,7 +30,7 @@ class BrandController extends Controller
      */
     public function create()
     {
-        return view('brand.create');
+        return view('api_settings.create');
     }
 
     /**
@@ -43,18 +43,17 @@ class BrandController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-			'name' => 'min:3|required',
-			'from_name' => 'min:3|required',
-			'from_email' => 'min:10|max:50|required',
-			'reply_email' => 'min:10|max:50|required'
+			'key' => 'min:3|required',
+			'secret' => 'min:3|required',
+			'brand_id' => 'mmin:1|intger|required'
 		]);
         $requestData = $request->all();
 
-        $brand = Brand::create($requestData);
+        api_setting::create($requestData);
 
-        Session::flash('flash_message', 'Brand added!');
+        Session::flash('flash_message', 'api_setting added!');
 
-        return redirect('brand');
+        return redirect('api_settings');
     }
 
     /**
@@ -66,9 +65,9 @@ class BrandController extends Controller
      */
     public function show($id)
     {
-        $brand = Brand::findOrFail($id);
+        $api_setting = api_setting::findOrFail($id);
 
-        return view('brand.show', compact('brand'));
+        return view('api_settings.show', compact('api_setting'));
     }
 
     /**
@@ -80,9 +79,9 @@ class BrandController extends Controller
      */
     public function edit($id)
     {
-        $brand = Brand::findOrFail($id);
+        $api_setting = api_setting::findOrFail($id);
 
-        return view('brand.edit', compact('brand'));
+        return view('api_settings.edit', compact('api_setting'));
     }
 
     /**
@@ -96,19 +95,18 @@ class BrandController extends Controller
     public function update($id, Request $request)
     {
         $this->validate($request, [
-			'name' => 'min:3|required',
-			'from_name' => 'min:3|required',
-			'from_email' => 'min:10|max:50|required',
-			'reply_email' => 'min:10|max:50|required'
+			'key' => 'min:3|required',
+			'secret' => 'min:3|required',
+			'brand_id' => 'mmin:1|intger|required'
 		]);
         $requestData = $request->all();
 
-        $brand = Brand::findOrFail($id);
-        $brand->update($requestData);
+        $api_setting = api_setting::findOrFail($id);
+        $api_setting->update($requestData);
 
-        Session::flash('flash_message', 'Brand updated!');
+        Session::flash('flash_message', 'api_setting updated!');
 
-        return redirect('brand');
+        return redirect('api_settings');
     }
 
     /**
@@ -120,10 +118,10 @@ class BrandController extends Controller
      */
     public function destroy($id)
     {
-        Brand::destroy($id);
+        api_setting::destroy($id);
 
-        Session::flash('flash_message', 'Brand deleted!');
+        Session::flash('flash_message', 'api_setting deleted!');
 
-        return redirect('brand');
+        return redirect('api_settings');
     }
 }
