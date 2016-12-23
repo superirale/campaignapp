@@ -25,3 +25,4 @@ Route::resource('brand', 'BrandController');
 Route::resource('smtp_settings', 'SmtpSettingsController');
 Route::resource('api_settings', 'ApiSettingsController');
 Route::resource('clients', 'ClientsController');
+Route::resource('campaign-fees', 'CampaignFeesController');
