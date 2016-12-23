@@ -23,3 +23,4 @@ Route::resource('list', 'ListController');
 Route::resource('list', 'ListController');
 Route::resource('brand', 'BrandController');
 Route::resource('smtp_settings', 'smtp_settingsController');
+Route::resource('api_settings', 'api_settingsController');
