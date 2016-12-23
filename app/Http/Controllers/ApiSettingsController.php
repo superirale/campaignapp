@@ -5,9 +5,13 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use App\api_setting;
+use App\Models\ApiSetting;
+use App\Models\Brand;
 use Illuminate\Http\Request;
 use Session;
+use Auth;
+use App\Helpers\Utils;
+
 
 class ApiSettingsController extends Controller
 {
@@ -18,7 +22,7 @@ class ApiSettingsController extends Controller
      */
     public function index()
     {
-        $api_settings = api_setting::paginate(25);
+        $api_settings = ApiSetting::paginate(25);
 
         return view('api_settings.index', compact('api_settings'));
     }
@@ -44,14 +48,15 @@ class ApiSettingsController extends Controller
     {
         $this->validate($request, [
 			'key' => 'min:3|required',
-			'secret' => 'min:3|required',
-			'brand_id' => 'mmin:1|intger|required'
+			'secret' => 'min:3|required'
 		]);
         $requestData = $request->all();
+        $brand = Brand::where('user_id', Auth::user()->id)->first();
+        $requestData['brand_id'] = $brand->id;
 
-        api_setting::create($requestData);
+        ApiSetting::create($requestData);
 
-        Session::flash('flash_message', 'api_setting added!');
+        Session::flash('flash_message', 'api setting added!');
 
         return redirect('api_settings');
     }
@@ -65,7 +70,7 @@ class ApiSettingsController extends Controller
      */
     public function show($id)
     {
-        $api_setting = api_setting::findOrFail($id);
+        $api_setting = ApiSetting::findOrFail($id);
 
         return view('api_settings.show', compact('api_setting'));
     }
@@ -79,7 +84,7 @@ class ApiSettingsController extends Controller
      */
     public function edit($id)
     {
-        $api_setting = api_setting::findOrFail($id);
+        $api_setting = ApiSetting::findOrFail($id);
 
         return view('api_settings.edit', compact('api_setting'));
     }
@@ -96,15 +101,20 @@ class ApiSettingsController extends Controller
     {
         $this->validate($request, [
 			'key' => 'min:3|required',
-			'secret' => 'min:3|required',
-			'brand_id' => 'mmin:1|intger|required'
+			'secret' => 'min:3|required'
 		]);
         $requestData = $request->all();
 
-        $api_setting = api_setting::findOrFail($id);
+        $api_setting = ApiSetting::findOrFail($id);
+
+        $brand = Brand::findOrFail($api_setting->brand_id);
+
+        if(! Utils::isOwner(Auth::user()->id, $brand->user_id))
+            Session::flash('flash_message', 'API settings does not belong this account!');
+
         $api_setting->update($requestData);
 
-        Session::flash('flash_message', 'api_setting updated!');
+        Session::flash('flash_message', 'Api settings updated!');
 
         return redirect('api_settings');
     }
@@ -118,9 +128,16 @@ class ApiSettingsController extends Controller
      */
     public function destroy($id)
     {
-        api_setting::destroy($id);
+        $api_setting = ApiSetting::findOrFail($id);
 
-        Session::flash('flash_message', 'api_setting deleted!');
+        $brand = Brand::findOrFail($api_setting->brand_id);
+
+        if(! Utils::isOwner(Auth::user()->id, $brand->user_id))
+            Session::flash('flash_message', 'API settings does not belong this account!');
+
+        $api_setting->delete();
+
+        Session::flash('flash_message', 'Api setting deleted!');
 
         return redirect('api_settings');
     }

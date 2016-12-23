@@ -1,10 +1,10 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class api_setting extends Model
+class ApiSetting extends Model
 {
     /**
      * The database table used by the model.
@@ -27,5 +27,5 @@ class api_setting extends Model
      */
     protected $fillable = ['key', 'secret', 'optional', 'brand_id'];
 
-    
+
 }
