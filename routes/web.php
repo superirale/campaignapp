@@ -19,9 +19,8 @@ Auth::routes();
 
 Route::get('/dashboard', 'DashboardController@index');
 
-Route::resource('list', 'ListController');
-Route::resource('list', 'ListController');
-Route::resource('brand', 'BrandController');
+Route::resource('lists', 'ListController');
+Route::resource('brands', 'BrandsController');
 Route::resource('smtp_settings', 'SmtpSettingsController');
 Route::resource('api_settings', 'ApiSettingsController');
 Route::resource('clients', 'ClientsController');

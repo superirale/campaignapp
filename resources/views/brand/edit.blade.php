@@ -18,7 +18,7 @@
 
                         {!! Form::model($brand, [
                             'method' => 'PATCH',
-                            'url' => ['/brand', $brand->id],
+                            'url' => ['/brands', $brand->id],
                             'class' => 'form-horizontal',
                             'files' => true
                         ]) !!}

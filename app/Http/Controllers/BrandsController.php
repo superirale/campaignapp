@@ -8,9 +8,16 @@ use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use Illuminate\Http\Request;
 use Session;
+use Auth;
+use App\Helpers\Utils;
 
 class BrandsController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('auth');
+
+    }
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +25,8 @@ class BrandsController extends Controller
      */
     public function index()
     {
-        $brand = Brand::paginate(25);
+
+        $brand = Brand::where('user_id', Auth::user()->id)->paginate(25);
 
         return view('brand.index', compact('brand'));
     }
@@ -49,12 +57,13 @@ class BrandsController extends Controller
 			'reply_email' => 'min:10|max:50|required'
 		]);
         $requestData = $request->all();
+        $requestData['user_id'] = Auth::user()->id;
 
         $brand = Brand::create($requestData);
 
         Session::flash('flash_message', 'Brand added!');
 
-        return redirect('brand');
+        return redirect('brands');
     }
 
     /**
@@ -82,6 +91,9 @@ class BrandsController extends Controller
     {
         $brand = Brand::findOrFail($id);
 
+        if(! Utils::isOwner(Auth::user()->id, $brand->user_id))
+            Session::flash('flash_message', 'Brand does not belong this account!');
+
         return view('brand.edit', compact('brand'));
     }
 
@@ -104,11 +116,15 @@ class BrandsController extends Controller
         $requestData = $request->all();
 
         $brand = Brand::findOrFail($id);
+
+        if(! Utils::isOwner(Auth::user()->id, $brand->user_id))
+            Session::flash('flash_message', 'Brand does not belong this account!');
+
         $brand->update($requestData);
 
         Session::flash('flash_message', 'Brand updated!');
 
-        return redirect('brand');
+        return redirect('brands');
     }
 
     /**
@@ -120,10 +136,13 @@ class BrandsController extends Controller
      */
     public function destroy($id)
     {
+        if(! Utils::isOwner(Auth::user()->id, $brand->user_id))
+            Session::flash('flash_message', 'Brand does not belong this account!');
+
         Brand::destroy($id);
 
         Session::flash('flash_message', 'Brand deleted!');
 
-        return redirect('brand');
+        return redirect('brands');
     }
 }

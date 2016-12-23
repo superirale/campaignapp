@@ -28,12 +28,6 @@
         {!! Form::text('logo_ref', null, ['class' => 'form-control']) !!}
         {!! $errors->first('logo_ref', '<p class="help-block">:message</p>') !!}
     </div>
-</div><div class="form-group {{ $errors->has('user_id') ? 'has-error' : ''}}">
-    {!! Form::label('user_id', 'User Id', ['class' => 'col-md-4 control-label']) !!}
-    <div class="col-md-6">
-        {!! Form::number('user_id', null, ['class' => 'form-control']) !!}
-        {!! $errors->first('user_id', '<p class="help-block">:message</p>') !!}
-    </div>
 </div>
 
 <div class="form-group">

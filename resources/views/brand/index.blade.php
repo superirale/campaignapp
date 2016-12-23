@@ -8,7 +8,7 @@
                     <div class="panel-heading">Brand</div>
                     <div class="panel-body">
 
-                        <a href="{{ url('/brand/create') }}" class="btn btn-primary btn-xs" title="Add New Brand"><span class="glyphicon glyphicon-plus" aria-hidden="true"/></a>
+                        <a href="{{ url('/brands/create') }}" class="btn btn-primary btn-xs" title="Add New Brand"><span class="glyphicon glyphicon-plus" aria-hidden="true"/></a>
                         <br/>
                         <br/>
                         <div class="table-responsive">
@@ -24,11 +24,11 @@
                                         <td>{{ $item->id }}</td>
                                         <td>{{ $item->name }}</td><td>{{ $item->from_name }}</td><td>{{ $item->from_email }}</td>
                                         <td>
-                                            <a href="{{ url('/brand/' . $item->id) }}" class="btn btn-success btn-xs" title="View Brand"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"/></a>
-                                            <a href="{{ url('/brand/' . $item->id . '/edit') }}" class="btn btn-primary btn-xs" title="Edit Brand"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
+                                            <a href="{{ url('/brands/' . $item->id) }}" class="btn btn-success btn-xs" title="View Brand"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"/></a>
+                                            <a href="{{ url('/brands/' . $item->id . '/edit') }}" class="btn btn-primary btn-xs" title="Edit Brand"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
                                             {!! Form::open([
                                                 'method'=>'DELETE',
-                                                'url' => ['/brand', $item->id],
+                                                'url' => ['/brands', $item->id],
                                                 'style' => 'display:inline'
                                             ]) !!}
                                                 {!! Form::button('<span class="glyphicon glyphicon-trash" aria-hidden="true" title="Delete Brand" />', array(
