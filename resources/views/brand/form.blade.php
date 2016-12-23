@@ -25,7 +25,7 @@
 </div><div class="form-group {{ $errors->has('logo_ref') ? 'has-error' : ''}}">
     {!! Form::label('logo_ref', 'Logo Ref', ['class' => 'col-md-4 control-label']) !!}
     <div class="col-md-6">
-        {!! Form::text('logo_ref', null, ['class' => 'form-control']) !!}
+        {!! Form::file('logo_ref', null, ['class' => 'form-control']) !!}
         {!! $errors->first('logo_ref', '<p class="help-block">:message</p>') !!}
     </div>
 </div>

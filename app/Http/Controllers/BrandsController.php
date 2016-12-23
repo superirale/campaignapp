@@ -136,6 +136,7 @@ class BrandsController extends Controller
      */
     public function destroy($id)
     {
+        $brand = Brand::find($id);
         if(! Utils::isOwner(Auth::user()->id, $brand->user_id))
             Session::flash('flash_message', 'Brand does not belong this account!');
 
