@@ -5,12 +5,19 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use App\Client;
+use App\Models\Brand;
+use App\Models\Client;
 use Illuminate\Http\Request;
 use Session;
+use Auth;
+use App\Helpers\Utils;
 
 class ClientsController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -42,9 +49,14 @@ class ClientsController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $requestData = $request->all();
-        
+
+        $brand = Brand::where('user_id', Auth::user()->id)->first();
+
+        $requestData['brand_id'] = $brand->id;
+
+
         Client::create($requestData);
 
         Session::flash('flash_message', 'Client added!');
@@ -90,10 +102,16 @@ class ClientsController extends Controller
      */
     public function update($id, Request $request)
     {
-        
+
         $requestData = $request->all();
-        
+
         $client = Client::findOrFail($id);
+
+        $brand = Brand::findOrFail($client->brand_id);
+
+        if(! Utils::isOwner(Auth::user()->id, $brand->user_id))
+            Session::flash('flash_message', 'Client settings does not belong to this account!');
+
         $client->update($requestData);
 
         Session::flash('flash_message', 'Client updated!');
@@ -110,7 +128,14 @@ class ClientsController extends Controller
      */
     public function destroy($id)
     {
-        Client::destroy($id);
+        $client = Client::findOrFail($id);
+
+        $brand = Brand::findOrFail($client->brand_id);
+
+        if(! Utils::isOwner(Auth::user()->id, $brand->user_id))
+            Session::flash('flash_message', 'Client settings does not belong to this account!');
+
+        $client->delete();
 
         Session::flash('flash_message', 'Client deleted!');
 
