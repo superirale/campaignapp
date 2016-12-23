@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateListsTable extends Migration
+class CreateSmtpSettingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,10 +12,14 @@ class CreateListsTable extends Migration
      */
     public function up()
     {
-        Schema::create('lists', function(Blueprint $table) {
+        Schema::create('smtp_settings', function(Blueprint $table) {
             $table->increments('id');
-            $table->string('title');
+            $table->string('host');
+            $table->integer('port');
             $table->integer('brand_id');
+            $table->string('encryption');
+            $table->string('username');
+            $table->string('password');
             $table->timestamps();
         });
     }
@@ -27,6 +31,6 @@ class CreateListsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('lists');
+        Schema::drop('smtp_settings');
     }
 }

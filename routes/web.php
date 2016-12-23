@@ -22,3 +22,4 @@ Route::get('/home', 'HomeController@index');
 Route::resource('list', 'ListController');
 Route::resource('list', 'ListController');
 Route::resource('brand', 'BrandController');
+Route::resource('smtp_settings', 'smtp_settingsController');
