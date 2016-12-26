@@ -159,4 +159,10 @@ class SubscribersController extends Controller
             return response()->json(["status"=> "done"]);
         }
     }
+
+    public function exportSubscribers(Request $request, $list_type_id)
+    {
+        $subscribers = Subscriber::all()->toArray();
+        $this->CsvUploader->writeCSV($subscribers, "subscribers");
+    }
 }

@@ -12,6 +12,7 @@ class VerifyCsrfToken extends BaseVerifier
      * @var array
      */
     protected $except = [
-        'subscribers/upload-csv/*'
+        'subscribers/upload-csv/*',
+        'subscribers/export-csv/*',
     ];
 }

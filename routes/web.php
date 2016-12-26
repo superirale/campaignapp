@@ -31,3 +31,4 @@ Route::post('campaign-fees/{brand_id}', 'CampaignFeesController@store');
 Route::resource('list', 'ListController');
 Route::resource('subscribers', 'SubscribersController');
 Route::post('subscribers/upload-csv/{list_type_id}', 'SubscribersController@uploadSubscribers');
+Route::post('subscribers/export-csv/{list_type_id}', 'SubscribersController@exportSubscribers');
