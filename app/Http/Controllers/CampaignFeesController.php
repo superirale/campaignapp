@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use App\CampaignFee;
+use App\Models\CampaignFee;
 use Illuminate\Http\Request;
 use Session;
+use Auth;
+use App\Models\Brand;
 
 class CampaignFeesController extends Controller
 {
@@ -28,9 +30,11 @@ class CampaignFeesController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function create()
+    public function create($brand_id)
     {
-        return view('campaign-fees.create');
+        $brand = Brand::findOrFail($brand_id);
+
+        return view('campaign-fees.create', compact('brand'));
     }
 
     /**
@@ -40,7 +44,7 @@ class CampaignFeesController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function store(Request $request)
+    public function store($brand_id, Request $request)
     {
         $this->validate($request, [
 			'currency' => 'min:3|required',
@@ -49,7 +53,8 @@ class CampaignFeesController extends Controller
 			'cost_per_recipient' => 'integer'
 		]);
         $requestData = $request->all();
-        
+        $requestData['brand_id'] = $brand_id;
+
         CampaignFee::create($requestData);
 
         Session::flash('flash_message', 'CampaignFee added!');
@@ -102,7 +107,7 @@ class CampaignFeesController extends Controller
 			'cost_per_recipient' => 'integer'
 		]);
         $requestData = $request->all();
-        
+
         $campaignfee = CampaignFee::findOrFail($id);
         $campaignfee->update($requestData);
 

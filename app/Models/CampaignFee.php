@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -25,7 +25,7 @@ class CampaignFee extends Model
      *
      * @var array
      */
-    protected $fillable = ['currency', 'delivery_fee', 'cost_per_recipient', 'no_of_emails_per_month'];
+    protected $fillable = ['currency', 'delivery_fee', 'cost_per_recipient', 'no_of_emails_per_month', 'brand_id'];
 
-    
+
 }

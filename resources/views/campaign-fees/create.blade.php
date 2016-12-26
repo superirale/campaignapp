@@ -16,7 +16,7 @@
                             </ul>
                         @endif
 
-                        {!! Form::open(['url' => '/campaign-fees', 'class' => 'form-horizontal', 'files' => true]) !!}
+                        {!! Form::open(['url' => "/campaign-fees/$brand->id", 'class' => 'form-horizontal', 'files' => true]) !!}
 
                         @include ('campaign-fees.form')
 

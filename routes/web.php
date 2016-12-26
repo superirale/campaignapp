@@ -25,3 +25,6 @@ Route::resource('smtp_settings', 'SmtpSettingsController');
 Route::resource('api_settings', 'ApiSettingsController');
 Route::resource('clients', 'ClientsController');
 Route::resource('campaign-fees', 'CampaignFeesController');
+
+Route::get('campaign-fees/create/{brand_id}', 'CampaignFeesController@create');
+Route::post('campaign-fees/{brand_id}', 'CampaignFeesController@store');
