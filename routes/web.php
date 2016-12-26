@@ -28,3 +28,5 @@ Route::resource('campaign-fees', 'CampaignFeesController');
 
 Route::get('campaign-fees/create/{brand_id}', 'CampaignFeesController@create');
 Route::post('campaign-fees/{brand_id}', 'CampaignFeesController@store');
+Route::resource('list', 'ListController');
+Route::resource('subscribers', 'SubscribersController');
