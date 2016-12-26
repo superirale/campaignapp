@@ -9,8 +9,16 @@ use App\Models\Subscriber;
 use Illuminate\Http\Request;
 use Session;
 
+use \League\Csv\Writer;
+use \League\Csv\Reader;
+use CampaignApp\Adapters\Contracts\SubscriberCsvInterface;
+
 class SubscribersController extends Controller
 {
+    function __construct(SubscriberCsvInterface $csv)
+    {
+        $this->CsvUploader = $csv;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -47,7 +55,7 @@ class SubscribersController extends Controller
 			'email' => 'required|min:10'
 		]);
         $requestData = $request->all();
-        
+
         Subscriber::create($requestData);
 
         Session::flash('flash_message', 'Subscriber added!');
@@ -98,7 +106,7 @@ class SubscribersController extends Controller
 			'email' => 'required|min:10'
 		]);
         $requestData = $request->all();
-        
+
         $subscriber = Subscriber::findOrFail($id);
         $subscriber->update($requestData);
 
@@ -121,5 +129,34 @@ class SubscribersController extends Controller
         Session::flash('flash_message', 'Subscriber deleted!');
 
         return redirect('subscribers');
+    }
+
+    public function uploadSubscribers(Request $request, $list_type_id)
+    {
+
+         if($request->hasFile("file")){
+
+            $results = $this->CsvUploader->readCSV($request->file('file'));
+            $count = 0;
+
+            foreach ($results as $row) {
+            //put isset check in the row elements
+                if($count > 0){
+
+                    $sub = new Subscriber();
+                    $sub->name = $row[0];
+                    $sub->email = $row[1];
+                    $sub->phone = $row[2];
+                    $sub->gender = $row[3];
+                    $sub->age = $row[4];
+                    $sub->list_type_id = $list_type_id;
+                    $sub->save();
+                    Session::flash('flash_message', 'CSV uploaded!');
+
+                }
+                $count++;
+            }
+            return response()->json(["status"=> "done"]);
+        }
     }
 }

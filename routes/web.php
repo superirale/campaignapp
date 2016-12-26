@@ -30,3 +30,4 @@ Route::get('campaign-fees/create/{brand_id}', 'CampaignFeesController@create');
 Route::post('campaign-fees/{brand_id}', 'CampaignFeesController@store');
 Route::resource('list', 'ListController');
 Route::resource('subscribers', 'SubscribersController');
+Route::post('subscribers/upload-csv/{list_type_id}', 'SubscribersController@uploadSubscribers');

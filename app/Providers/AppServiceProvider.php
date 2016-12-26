@@ -23,6 +23,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind('CampaignApp\Adapters\Contracts\SubscriberCsvInterface', 'CampaignApp\Adapters\Services\UploadSubscribersCsv');
     }
 }
