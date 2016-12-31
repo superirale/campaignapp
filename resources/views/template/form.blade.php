@@ -7,9 +7,10 @@
 </div><div class="form-group {{ $errors->has('source') ? 'has-error' : ''}}">
     {!! Form::label('source', 'Source', ['class' => 'col-md-4 control-label']) !!}
     <div class="col-md-6">
-        {!! Form::textarea('source', null, ['class' => 'form-control', 'required' => 'required']) !!}
+        {!! Form::textarea('source', null, ['class' => 'form-control', 'id' => 'sourceField', 'required' => 'required']) !!}
         {!! $errors->first('source', '<p class="help-block">:message</p>') !!}
     </div>
+    @ckeditor('sourceField', ['height' => 500])
 </div>
 
 <div class="form-group">

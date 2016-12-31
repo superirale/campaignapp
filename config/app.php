@@ -164,6 +164,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Appzcoder\CrudGenerator\CrudGeneratorServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
+        JeroenNoten\LaravelCkEditor\ServiceProvider::class,
 
         /*
          * Package Service Providers...

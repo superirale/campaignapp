@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "68e85a2f6e76d01bded14222cb6e18f7",
-    "content-hash": "e75a27204b34175967b0d23d58749d8c",
+    "hash": "185b5dca38a2ce9fc3281715c42a3016",
+    "content-hash": "c8685351eea581d524bcdc7312ac0fb3",
     "packages": [
         {
             "name": "appzcoder/crud-generator",
@@ -477,6 +477,103 @@
                 "tokenizer"
             ],
             "time": "2016-12-07 09:37:55"
+        },
+        {
+            "name": "jeroennoten/laravel-ckeditor",
+            "version": "v3.7.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jeroennoten/laravel-ckeditor.git",
+                "reference": "b86a60bc9044c65bb7c81d03fad2774a9482cd57"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jeroennoten/laravel-ckeditor/zipball/b86a60bc9044c65bb7c81d03fad2774a9482cd57",
+                "reference": "b86a60bc9044c65bb7c81d03fad2774a9482cd57",
+                "shasum": ""
+            },
+            "require": {
+                "intervention/image": "^2.3",
+                "jeroennoten/laravel-package-helper": "^3.1",
+                "laravel/framework": "~5.2.0|~5.3.0",
+                "league/flysystem": "^1.0.8"
+            },
+            "require-dev": {
+                "hamcrest/hamcrest-php": "~1.2",
+                "league/flysystem-aws-s3-v3": "^1.0.1",
+                "mockery/mockery": "^0.9.5",
+                "orchestra/testbench": "~3.2.4|~3.3.0",
+                "phpunit/phpunit": "~4.8.20"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "JeroenNoten\\LaravelCkEditor\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jeroen Noten",
+                    "email": "jeroennoten@me.com"
+                }
+            ],
+            "description": "Laravel CKEditor",
+            "keywords": [
+                "CKEditor",
+                "laravel",
+                "wysiwyg"
+            ],
+            "time": "2016-10-31 13:40:34"
+        },
+        {
+            "name": "jeroennoten/laravel-package-helper",
+            "version": "v3.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jeroennoten/laravel-package-helper.git",
+                "reference": "bd6dbe196444215343c28cb7fef33a5e1f4637fd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jeroennoten/laravel-package-helper/zipball/bd6dbe196444215343c28cb7fef33a5e1f4637fd",
+                "reference": "bd6dbe196444215343c28cb7fef33a5e1f4637fd",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "5.1.*|5.2.*|5.3.*"
+            },
+            "require-dev": {
+                "mockery/mockery": "^0.9.5",
+                "orchestra/testbench": "~3.1.0|~3.2.0|~3.3.0",
+                "phpunit/phpunit": "~5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "JeroenNoten\\LaravelPackageHelper\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jeroen Noten",
+                    "email": "jeroennoten@me.com"
+                }
+            ],
+            "description": "Helpers for Laravel packages",
+            "keywords": [
+                "helper",
+                "laravel",
+                "package"
+            ],
+            "time": "2016-08-31 09:31:18"
         },
         {
             "name": "laravel/framework",
