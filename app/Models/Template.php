@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -25,7 +25,7 @@ class Template extends Model
      *
      * @var array
      */
-    protected $fillable = ['title', 'source'];
+    protected $fillable = ['title', 'source', 'brand_id'];
 
-    
+
 }

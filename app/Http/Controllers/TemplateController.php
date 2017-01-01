@@ -5,12 +5,18 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use App\Template;
+use App\Models\Template;
+use App\Models\Brand;
 use Illuminate\Http\Request;
 use Session;
+use Auth;
 
 class TemplateController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -47,7 +53,12 @@ class TemplateController extends Controller
 			'source' => 'required'
 		]);
         $requestData = $request->all();
-        
+
+        $brand = Brand::where('user_id', Auth::user()->id)->first();
+
+        $requestData['brand_id'] = $brand->id;
+
+
         Template::create($requestData);
 
         Session::flash('flash_message', 'Template added!');
@@ -98,7 +109,7 @@ class TemplateController extends Controller
 			'source' => 'required'
 		]);
         $requestData = $request->all();
-        
+
         $template = Template::findOrFail($id);
         $template->update($requestData);
 
